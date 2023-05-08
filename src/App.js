@@ -5,6 +5,7 @@ import Service from "./Pages/Service";
 import About from "./Pages/About";
 import Home from "./Pages/Home";
 import Contact from "./Pages/Contact";
+import CountriesList from "./Pages/Countries";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/About" element={<About />} />
           <Route path="/Service" element={<Service />} />
           <Route path="/Contact" element={<Contact />} />
+          <Route path="/countries" element={<CountriesList />} />
  
       </Routes>
     </BrowserRouter>
