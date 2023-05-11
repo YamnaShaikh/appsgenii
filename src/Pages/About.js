@@ -2,6 +2,7 @@ import React from 'react'
 import Header from '../components/Header'
 import image from '../images/company-profile-presentation-tips.jpg'
 import Footer from '../components/Footer'
+import Example from './Example'
 
 const About = () => {
     return (
@@ -18,6 +19,7 @@ const About = () => {
                     <img src={image} />
                 </div>
             </div>
+            <Example />
             <Footer />
         </div>
     )

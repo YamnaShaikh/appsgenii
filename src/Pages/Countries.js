@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from "react";
-import Table from 'react-bootstrap/Table';
+import Table from "react-bootstrap/Table";
 import { Button } from "react-bootstrap";
 import Header from "../components/Header";
-import axios from 'axios';
-import '../App.css'
+import axios from "axios";
+import "../App.css";
 
 function CountriesList() {
-  const {name, setName} = useState(); 
   const [countriesList, setCountriesList] = useState([]);
   const [searchItem, setSearchItem] = useState("");
 
   const fetchCountries = async () => {
     try {
-      const response = await axios.get('https://restcountries.com/v3.1/all');
+      const response = await axios.get("https://restcountries.com/v3.1/all");
       setCountriesList(response.data);
     } catch (error) {
-      console.log('Error:', error.message);
+      console.log("Error:", error.message);
     }
   };
 
@@ -23,46 +22,55 @@ function CountriesList() {
     fetchCountries();
   }, []);
 
-//   const filteredCountry = countriesList.filter((country) =>
-//     country.name.common.toLowerCase().includes(searchItem.toLowerCase())
-//   );
+  //   const filteredCountry = countriesList.filter((country) =>
+  //     country.name.common.toLowerCase().includes(searchItem.toLowerCase())
+  //   );
 
   const filteredCountry = async () => {
     try {
-        const response = await axios.get(`https://restcountries.com/v3.1/name/${name}`);
-        setSearchItem(response.data);
-      } catch (error) {
-        console.log('Error:', error.message);
-      }
+      const response = await axios.get(
+        `https://restcountries.com/v3.1/name/${searchItem}`
+      );
+      //debugger;
+      setCountriesList(response.data);
+    } catch (error) {
+      alert(error.message)
+    }
+  };
 
+  function handleSearch(e) {
+    setSearchItem(e.target.value);
   }
-
-  function handleSearch(e){
-    setSearchItem(e.target.value)    
-}
 
   return (
     <div>
       <Header />
       <br />
       <div className="container rounded">
-        <div class="form-group ">
-          <input
-            type="text"
-            className="form-control search"
-            value={searchItem}
-            placeholder="Search your country"
-            onChange={handleSearch}
-          />
-          <Button
-            type = 'Submit'
-            onClick = {filteredCountry}
-          >
-            Search
-          </Button>
+        <div
+          className="form-group"
+          style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
+        >
+          <div style={{ padding: "5px" }}>
+            <input
+              type="text"
+              className="form-control"
+              value={searchItem}
+              placeholder="Search your country"
+              onChange={handleSearch}
+            />
+          </div>
+          <div style={{ padding: "5px" }}>
+            <Button onClick={filteredCountry}>Search</Button>
+          </div>
         </div>
-
-        <Table striped bordered hover variant="primary" style={{marginTop: '10px'}}>
+        <Table
+          striped
+          bordered
+          hover
+          variant="primary"
+          style={{ marginTop: "10px" }}
+        >
           <thead>
             <tr>
               <th scope="col">Name</th>
@@ -86,7 +94,7 @@ function CountriesList() {
                   {country.callingCodes && country.callingCodes.length > 0
                     ? `+${country.callingCodes}`
                     : "N/A"}
-                </td>
+                </td> 
               </tr>
             ))}
           </tbody>
